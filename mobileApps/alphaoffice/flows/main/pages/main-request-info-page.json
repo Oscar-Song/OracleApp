@@ -1,0 +1,213 @@
+{
+  "pageModelVersion": "19.4.3",
+  "title": "",
+  "description": "",
+  "variables": {
+    "contactDetails": {
+      "type": "postRequest"
+    },
+    "productId": {
+      "type": "string",
+      "required": true,
+      "input": "fromUrl"
+    }
+  },
+  "metadata": {},
+  "types": {
+    "request": {
+      "phoneNumber": "number",
+      "emailAddress": "string",
+      "lastName": "string",
+      "comments": "string",
+      "productID": "string",
+      "firstName": "string"
+    },
+    "@decorators.postRequest": {
+      "endpoint": "postRequest",
+      "service": "request-Info",
+      "path": "request"
+    },
+    "postRequest": {
+      "request": {
+        "comments": "string",
+        "email_address": "string",
+        "first_name": "string",
+        "last_name": "string",
+        "phone_number": "string",
+        "product_id": "string"
+      }
+    }
+  },
+  "chains": {
+    "BackButtonActionChain": {
+      "description": "",
+      "variables": {
+        "detail": {
+          "required": true,
+          "type": "any",
+          "input": "fromCaller"
+        }
+      },
+      "root": "navigateBack1",
+      "actions": {
+        "navigateBack1": {
+          "module": "vb/action/builtin/navigateBackAction"
+        }
+      }
+    },
+    "SubmitButtonActionChain": {
+      "description": "",
+      "variables": {
+        "detail": {
+          "required": true,
+          "type": "any",
+          "input": "fromCaller"
+        }
+      },
+      "root": "if1",
+      "actions": {
+        "fireNotification1": {
+          "module": "vb/action/builtin/fireNotificationEventAction",
+          "parameters": {
+            "target": "leaf",
+            "summary": "[[ $chain.results.callRestEndpoint1.message.summary ]]",
+            "type": "error",
+            "displayMode": "persist"
+          }
+        },
+        "if1": {
+          "module": "vb/action/builtin/ifAction",
+          "parameters": {
+            "condition": "{{ $page.functions.isFormValid(\"createform\") }}"
+          },
+          "outcomes": {
+            "true": "productId",
+            "false": "fireNotification2"
+          }
+        },
+        "fireNotification2": {
+          "module": "vb/action/builtin/fireNotificationEventAction",
+          "parameters": {
+            "target": "leaf",
+            "summary": "Failed",
+            "type": "error"
+          }
+        },
+        "callRestEndpoint1": {
+          "module": "vb/action/builtin/restAction",
+          "parameters": {
+            "endpoint": "user/postRequest",
+            "body": "{{ $page.variables.contactDetails }}"
+          },
+          "outcomes": {
+            "failure": "fireNotification1",
+            "success": "fireNotification3"
+          }
+        },
+        "fireNotification3": {
+          "module": "vb/action/builtin/fireNotificationEventAction",
+          "parameters": {
+            "target": "leaf",
+            "summary": "Submitted Successfully ",
+            "type": "info"
+          },
+          "outcomes": {
+            "success": "navigateBack1"
+          }
+        },
+        "productId": {
+          "module": "vb/action/builtin/assignVariablesAction",
+          "parameters": {
+            "$page.variables.contactDetails": {
+              "source": {
+                "request": {
+                  "productID": "{{ $page.variables.productId }}"
+                }
+              },
+              "reset": "none",
+              "auto": "always",
+              "mapping": {
+                "$target.request": {
+                  "source": "$source.request",
+                  "reset": "none",
+                  "auto": "always"
+                }
+              }
+            }
+          },
+          "outcomes": {
+            "success": "callRestEndpoint1"
+          }
+        },
+        "navigateBack1": {
+          "module": "vb/action/builtin/navigateBackAction"
+        }
+      }
+    }
+  },
+  "eventListeners": {
+    "ojButtonOjAction": {
+      "chains": [
+        {
+          "chainId": "BackButtonActionChain",
+          "parameters": {
+            "detail": "{{ $event.detail }}"
+          }
+        }
+      ]
+    },
+    "submitButtonOjAction": {
+      "chains": [
+        {
+          "chainId": "SubmitButtonActionChain",
+          "parameters": {
+            "detail": "{{ $event.detail }}"
+          }
+        }
+      ]
+    }
+  },
+  "imports": {
+    "components": {
+      "oj-ext-mobile-page-template": {
+        "path": "vb/components/mobile-page-template/loader"
+      },
+      "oj-label": {
+        "path": "ojs/ojlabel"
+      },
+      "oj-input-text": {
+        "path": "ojs/ojinputtext"
+      },
+      "oj-text-area": {
+        "path": "ojs/ojinputtext"
+      },
+      "oj-input-number": {
+        "path": "ojs/ojinputnumber"
+      },
+      "oj-input-date": {
+        "path": "ojs/ojdatetimepicker"
+      },
+      "oj-select-one": {
+        "path": "ojs/ojselectcombobox"
+      },
+      "oj-option": {
+        "path": "ojs/ojoption"
+      },
+      "oj-form-layout": {
+        "path": "ojs/ojformlayout"
+      },
+      "oj-label-value": {
+        "path": "ojs/ojlabelvalue"
+      },
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-validation-group": {
+        "path": "ojs/ojvalidationgroup"
+      },
+      "ojasyncvalidator-regexp":{
+        "path": "ojs/ojasyncvalidator-regexp"
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+    "chains": {
+        "SubmitButtonActionChain": {
+            "Test 1": {
+                "context": {
+                    "$page.variables.productId": "1041"
+                },
+                "mocks": {
+                    "callRestEndpoint1": {
+                        "outcome": "success",
+                        "result": {
+                            "status": 200,
+                            "headers": {},
+                            "body": {
+                                "request": {
+                                    "productID ": "1041",
+                                    "firstName": "ABC",
+                                    "lastName": "XYZ",
+                                    "emailAddress": "test @gmail.com ",
+                                    "phoneNumber": "431 - 232 - 2212 ",
+                                    "comments": "need more information regarding product 1041"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+   }

@@ -1,0 +1,72 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "User",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://129.146.233.19:8080/user",
+            "description": "User"
+        }
+    ],
+    "paths": {
+        "/request": {
+            "post": {
+                "operationId": "postRequest",
+                "requestBody": {
+                    "description": "Request for application/json",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostRequestRequest"
+                            },
+                            "examples": {
+                                "vb": {
+                                    "summary": "Example stored by VB User",
+                                    "externalValue": "./examples/postRequest/request_application_json_vb.json"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {},
+                "x-vb": {
+                    "actionHint": "create"
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "PostRequestRequest": {
+                "type": "object",
+                "properties": {
+                    "request": {
+                        "type": "object",
+                        "properties": {
+                            "product_id": {
+                                "type": "string"
+                            },
+                            "first_name": {
+                                "type": "string"
+                            },
+                            "last_name": {
+                                "type": "string"
+                            },
+                            "email_address": {
+                                "type": "string"
+                            },
+                            "phone_number": {
+                                "type": "string"
+                            },
+                            "comments": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

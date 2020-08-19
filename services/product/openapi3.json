@@ -1,0 +1,226 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Product",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://158.101.36.69:8080/product",
+            "description": "Product"
+        }
+    ],
+    "paths": {
+        "/list": {
+            "get": {
+                "operationId": "getList",
+                "responses": {
+                    "default": {
+                        "description": "Response for default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetList"
+                                },
+                                "examples": {
+                                    "vb": {
+                                        "summary": "Example stored by VB User",
+                                        "externalValue": "./examples/getList/response_default_application_json_vb.json"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-vb": {
+                    "actionHint": "getMany"
+                }
+            }
+        },
+        "/{id}": {
+            "get": {
+                "operationId": "getId2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Response for default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetId"
+                                },
+                                "examples": {
+                                    "vb": {
+                                        "summary": "Example stored by VB User",
+                                        "externalValue": "./examples/getId2/response_default_application_json_vb.json"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-vb": {
+                    "actionHint": "getOne"
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "GetList": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "product_id": {
+                            "type": "string"
+                        },
+                        "category_id": {
+                            "type": "string"
+                        },
+                        "list_price": {
+                            "type": "string"
+                        },
+                        "attribute3": {
+                            "nullable": true
+                        },
+                        "created_by": {
+                            "type": "string"
+                        },
+                        "attribute2": {
+                            "nullable": true
+                        },
+                        "last_updated_by": {
+                            "type": "string"
+                        },
+                        "attribute1": {
+                            "nullable": true
+                        },
+                        "object_version_id": {
+                            "type": "string"
+                        },
+                        "min_price": {
+                            "type": "string"
+                        },
+                        "parent_category_id": {
+                            "type": "string"
+                        },
+                        "creation_date": {
+                            "type": "string"
+                        },
+                        "product_name": {
+                            "type": "string"
+                        },
+                        "last_update_date": {
+                            "type": "string"
+                        },
+                        "external_url": {
+                            "type": "string"
+                        },
+                        "attribute5": {
+                            "nullable": true
+                        },
+                        "attribute4": {
+                            "nullable": true
+                        },
+                        "attribute_category": {
+                            "nullable": true
+                        },
+                        "product_status": {
+                            "type": "string"
+                        },
+                        "warranty_period_months": {
+                            "type": "string"
+                        },
+                        "cost_price": {
+                            "type": "string"
+                        },
+                        "twitter_tag": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "GetId": {
+                "type": "object",
+                "properties": {
+                    "product_id": {
+                        "type": "string"
+                    },
+                    "category_id": {
+                        "type": "string"
+                    },
+                    "list_price": {
+                        "type": "string"
+                    },
+                    "attribute3": {
+                        "nullable": true
+                    },
+                    "created_by": {
+                        "type": "string"
+                    },
+                    "attribute2": {
+                        "nullable": true
+                    },
+                    "last_updated_by": {
+                        "type": "string"
+                    },
+                    "attribute1": {
+                        "nullable": true
+                    },
+                    "object_version_id": {
+                        "type": "string"
+                    },
+                    "min_price": {
+                        "type": "string"
+                    },
+                    "parent_category_id": {
+                        "type": "string"
+                    },
+                    "creation_date": {
+                        "type": "string"
+                    },
+                    "product_name": {
+                        "type": "string"
+                    },
+                    "last_update_date": {
+                        "type": "string"
+                    },
+                    "external_url": {
+                        "type": "string"
+                    },
+                    "attribute5": {
+                        "nullable": true
+                    },
+                    "attribute4": {
+                        "nullable": true
+                    },
+                    "attribute_category": {
+                        "nullable": true
+                    },
+                    "product_status": {
+                        "type": "string"
+                    },
+                    "warranty_period_months": {
+                        "type": "string"
+                    },
+                    "cost_price": {
+                        "type": "string"
+                    },
+                    "twitter_tag": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

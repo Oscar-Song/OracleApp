@@ -1,0 +1,23 @@
+<oj-ext-mobile-page-template id="page-template" page-title="Form Demo">
+  
+  <!-- This adds section header commonly seen in mobile apps -->
+  <h4 class="vb-mobile-section-header oj-sm-padding-2x">Request Product Info</h4>
+  <oj-validation-group id="createform"> 
+  <oj-form-layout max-columns="1" label-edge="top" direction="row" class="oj-form-control-full-width">
+    <oj-input-text id="input" label-hint="First Name" placeholder="Your Input" value="{{ $variables.contactDetails.request.first_name }}" required="true"></oj-input-text>
+    <oj-input-text label-hint="Last Name" value="{{ $variables.contactDetails.request.last_name }}"></oj-input-text>
+    <oj-input-text id="Tel" label-hint="Phone" placeholder="Your Telephone" virtual-keyboard="tel" value="{{ $variables.contactDetails.request.phone_number }}"></oj-input-text>
+    <oj-input-text id="Email" label-hint="Email" placeholder="Your Email" autocomplete="off" validators="[[$variables.validators]]" virtual-keyboard="email" required="true" value="{{ $variables.contactDetails.request.email_address }}"></oj-input-text>
+    <oj-text-area id="textArea" rows="4" label-hint="Textarea" placeholder="Multiline Text" value="{{ $variables.contactDetails.request.comments }}"></oj-text-area>
+  </oj-form-layout>
+
+  <oj-form-layout class="oj-form-control-full-width">
+    <oj-button chroming="full" id="submitButton" class="oj-lg-margin-2x" on-oj-action="[[$listeners.submitButtonOjAction]]">
+      Submit
+    </oj-button>
+  </oj-form-layout>
+  </oj-validation-group>
+    <oj-button on-oj-action="[[$listeners.ojButtonOjAction]]" slot="startControl" chroming="half" display="icons">
+    <span slot="startIcon" class="oj-fwk-icon oj-fwk-icon-back"></span>Back
+  </oj-button>
+</oj-ext-mobile-page-template>

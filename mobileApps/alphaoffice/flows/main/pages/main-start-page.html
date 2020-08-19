@@ -1,0 +1,30 @@
+<oj-ext-mobile-page-template id="page-template" page-title="Catalog">
+  
+  <div class="oj-flex-item oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
+    <div class="oj-flex-item oj-sm-flex-initial">
+      <img :src="{{ $flow.path + 'resources/images/AlphaOfficeSupply_2.png' }}">
+    </div>
+    <h1 class="oj-flex-item oj-sm-flex-initial">Products</h1>
+    <oj-list-view class="oj-flex-item oj-sm-flex-initial" data="[[ $variables.getProducts ]]" selection-mode="single" on-first-selected-item-changed="[[ $page.listeners.SelectionChanged ]]">
+      <template slot="itemTemplate">
+        <div class="oj-flex oj-flex-items-pad">
+          <div class="oj-flex-item oj-sm-4 oj-md-4">
+                            <oj-avatar role="img" :aria-label="[['Image of ' + $current.data.product_name]]" :title="[['Image of ' + $current.data.product_name]]" background="purple" size="md" src="[[ $current.data.external_url ]]"></oj-avatar> 
+<!--             <img :src="[[ $current.data.external_url ]]" width="80" height="80"> -->
+          </div>
+          <div class="oj-flex-item oj-sm-6 oj-md-6">
+                            <oj-bind-text value="[[ $current.data.product_name ]]"></oj-bind-text>
+          </div>
+            <div class="oj-flex-item oj-md-2 oj-sm-2"> 
+                            <oj-bind-text converter='{"options":{"style":"currency","currency":"USD"},"type":"number"}' value="[[$current.data.list_price ]]"></oj-bind-text>                              
+          </div> 
+          
+        </div>
+       
+        
+      </template>
+      
+
+    </oj-list-view>
+  </div>
+</oj-ext-mobile-page-template>

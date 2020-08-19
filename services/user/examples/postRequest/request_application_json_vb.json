@@ -1,0 +1,10 @@
+{
+  "request": {
+    "product_id": "1040",
+    "first_name": "ABC",
+    "last_name": "XYZ",
+    "email_address": "test @gmail.com ",
+    "phone_number": "431 - 232 - 2212 ",
+    "comments": "need more information regarding product 1027"
+  }
+}

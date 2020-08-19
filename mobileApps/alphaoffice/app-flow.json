@@ -1,0 +1,109 @@
+{
+  "applicationModelVersion": "19.4.3",
+  "id": "alphaoffice",
+  "description": "A new VB app",
+  "defaultPage": "app",
+  "chains": {
+    "hideSpinner": {
+      "description": "Hides the application loading screen shown immediately after the splash screen is dismissed.",
+      "root": "hideSpinner",
+      "actions": {
+        "hideSpinner": {
+          "module": "vb/action/builtin/callModuleFunctionAction",
+          "parameters": {
+            "module": "{{ $application.functions }}",
+            "functionName": "hideSpinner"
+          }
+        }
+      }
+    },
+    "resourceChangedHandler": {
+      "root": "fireNotification1",
+      "description": "Displays a notification message when application has been updated and needs to be refreshed.",
+      "variables": {
+        "event": {
+          "required": false,
+          "input": "fromCaller",
+          "type": {
+            "error": {
+              "detail": "string"
+            }
+          }
+        }
+      },
+      "actions": {
+        "fireNotification1": {
+          "module": "vb/action/builtin/fireNotificationEventAction",
+          "parameters": {
+            "summary": "[[ $chain.variables.event.error.detail ]]",
+            "target": "leaf"
+          }
+        }
+      }
+    }
+  },
+  "services": {
+    "plsApexVenksOmOrders": {
+      "path": "./services/plsApexVenksOmOrders/openapi3.json"
+    },
+    "ordsVarunAlphaoffice": {
+      "path": "./services/ordsVarunAlphaoffice/openapi3.json"
+    },
+    "product": {
+      "path": "./services/product/openapi3.json"
+    },
+    "request-Info": {
+      "path": "./services/request-Info/openapi3.json"
+    },
+    "user": {
+      "path": "./services/user/openapi3.json"
+    }
+  },
+  "translations": {
+    "app": {
+      "path": "./resources/strings/app/nls/app-strings"
+    }
+  },
+  "events": {
+    "navigateToItem": {
+      "payloadType": {
+        "item": "string"
+      }
+    }
+  },
+  "types": {},
+  "variables": {},
+  "eventListeners": {
+    "vbEnter": {
+      "chains": [
+        {
+          "chainId": "hideSpinner"
+        }
+      ]
+    },
+    "vbResourceChanged": {
+      "chains": [
+        {
+          "chainId": "resourceChangedHandler",
+          "parameters": {
+            "event": "{{ $event }}"
+          }
+        }
+      ]
+    }
+  },
+  "userConfig": {
+    "type": "vb/DefaultSecurityProvider",
+    "configuration": {
+      "authentication": {
+        "type": "oraclecloud",
+        "options": {
+          "login": "",
+          "logout": "",
+          "headers": {}
+        }
+      }
+    }
+  },
+  "security": {}
+}

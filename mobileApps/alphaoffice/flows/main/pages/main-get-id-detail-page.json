@@ -1,0 +1,147 @@
+{
+  "pageModelVersion": "19.4.3",
+  "title": "Product Detail",
+  "description": "Displays getId record",
+  "variables": {
+    "getId": {
+      "type": "page:getIdResponse"
+    },
+    "getIdId": {
+      "type": "string",
+      "required": true,
+      "input": "fromUrl"
+    }
+  },
+  "metadata": {},
+  "types": {
+    "getIdResponse": {
+      "list_price": "string",
+      "product_id": "string",
+      "product_name": "string"
+    },
+    "@decorators.getIdResponse": {
+      "endpoint": "getId",
+      "service": "product",
+      "path": "request"
+    }
+  },
+  "chains": {
+    "goBackChain": {
+      "root": "navigateBack",
+      "actions": {
+        "navigateBack": {
+          "module": "vb/action/builtin/navigateBackAction",
+          "outcomes": {
+            "success": ""
+          }
+        }
+      }
+    },
+    "loadGetIdChain": {
+      "root": "loadGetId",
+      "actions": {
+        "loadGetId": {
+          "module": "vb/action/builtin/restAction",
+          "parameters": {
+            "endpoint": "product/getId2",
+            "uriParams": {
+              "id": "{{ $page.variables.getIdId }}"
+            }
+          },
+          "outcomes": {
+            "success": "assignPayload",
+            "failure": "fireErrorNotification"
+          }
+        },
+        "assignPayload": {
+          "module": "vb/action/builtin/assignVariablesAction",
+          "parameters": {
+            "$page.variables.getId": {
+              "source": "[[ $chain.results.loadGetId.body || $chain.results.loadGetId.content ]]"
+            }
+          },
+          "outcomes": {}
+        },
+        "fireErrorNotification": {
+          "module": "vb/action/builtin/fireNotificationEventAction",
+          "parameters": {
+            "summary": "Could not load data",
+            "message": "[[ 'Could not load data: status ' + $chain.results.loadGetId.payload.status ]]",
+            "type": "error",
+            "displayMode": "persist"
+          },
+          "outcomes": {}
+        }
+      }
+    },
+    "ButtonActionChain": {
+      "description": "",
+      "variables": {
+        "detail": {
+          "required": true,
+          "type": "any",
+          "input": "fromCaller"
+        }
+      },
+      "root": "navigateToPage1",
+      "actions": {
+        "navigateToPage1": {
+          "module": "vb/action/builtin/navigateToPageAction",
+          "parameters": {
+            "page": "main-request-info",
+            "history": "push",
+            "params": {
+              "productId": "{{ $page.variables.getId.product_id }}"
+            }
+          }
+        }
+      },
+      "returnType": "string"
+    }
+  },
+  "eventListeners": {
+    "backButtonClicked": {
+      "chains": [
+        {
+          "chainId": "goBackChain"
+        }
+      ]
+    },
+    "vbEnter": {
+      "chains": [
+        {
+          "chainId": "loadGetIdChain"
+        }
+      ]
+    },
+    "ojButtonOjAction": {
+      "chains": [
+        {
+          "chainId": "ButtonActionChain",
+          "parameters": {
+            "detail": "{{ $event.detail }}"
+          }
+        }
+      ]
+    }
+  },
+  "imports": {
+    "components": {
+      "oj-ext-mobile-page-template": {
+        "path": "vb/components/mobile-page-template/loader"
+      },
+      "oj-form-layout": {
+        "path": "ojs/ojformlayout"
+      },
+      "oj-input-text": {
+        "path": "ojs/ojinputtext"
+      },
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-dialog": {
+        "path": "ojs/ojdialog"
+      }
+    }
+  }
+}

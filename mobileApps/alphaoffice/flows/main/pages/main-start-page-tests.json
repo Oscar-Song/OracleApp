@@ -1,0 +1,13 @@
+{
+    "chains": {
+        "navigateToGetIdDetailChain": {
+            "Test 1": {
+                "mocks": {
+                    "navigateToDetail": {
+                        "outcome": "success"
+                    }
+                }
+            }
+        }
+    }
+   }

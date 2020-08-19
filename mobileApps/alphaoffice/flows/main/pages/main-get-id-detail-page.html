@@ -1,0 +1,16 @@
+<oj-ext-mobile-page-template id="page-template" page-title="Product Detail">
+
+  <div class="oj-flex-item oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
+    <oj-form-layout class="oj-flex-item oj-sm-flex-initial">
+      <oj-input-text value="{{ $variables.getId.product_id }}" readonly="true" label-hint="PRODUCT_ID"></oj-input-text>
+      <oj-input-text value="{{ $variables.getId.product_name }}" readonly="true" label-hint="PRODUCT_NAME"></oj-input-text>
+      <oj-input-text value="{{ $variables.getId.list_price }}" readonly="true" label-hint="LIST_PRICE"></oj-input-text>
+    </oj-form-layout>
+    <div class="oj-flex-item oj-sm-flex-initial oj-sm-align-self-center">
+      <oj-button on-oj-action="[[$listeners.ojButtonOjAction]]">Request More Info</oj-button>
+    </div>
+  </div>
+  <oj-button on-oj-action="[[$page.listeners.backButtonClicked]]" slot="startControl" chroming="half" display="icons">
+    <span slot="startIcon" class="oj-fwk-icon oj-fwk-icon-back"></span>Back
+  </oj-button>
+</oj-ext-mobile-page-template>

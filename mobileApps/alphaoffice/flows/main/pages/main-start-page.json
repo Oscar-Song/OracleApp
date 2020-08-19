@@ -1,0 +1,115 @@
+{
+  "pageModelVersion": "19.4.3",
+  "title": "",
+  "description": "",
+  "variables": {
+    "getProducts": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "product/getList",
+        "responseType": "getProducts",
+        "keyAttributes": "product_id"
+      }
+    }
+  },
+  "metadata": {},
+  "types": {
+    "@decorators.getProducts": {
+      "endpoint": "getList",
+      "service": "product",
+      "path": "response"
+    },
+    "getProducts": [
+        {
+        "external_url": "string",
+        "list_price": "string",
+        "product_id": "string",
+        "product_name": "string"
+        }
+      ]
+  },
+  "chains": {
+    "navigateToGetIdDetailChain": {
+      "root": "navigateToDetail",
+      "variables": {
+        "getIdId": {
+          "type": "string",
+          "input": "fromCaller",
+          "required": true
+        }
+      },
+      "actions": {
+        "navigateToDetail": {
+          "module": "vb/action/builtin/navigateToPageAction",
+          "parameters": {
+            "history": "push",
+            "page": "main-get-id-detail",
+            "params": {
+              "getIdId": "{{ $chain.variables.getIdId }}"
+            }
+          },
+          "outcomes": {
+            "success": ""
+          }
+        }
+      }
+    },
+    "customFetchActionChain": {
+      "root": "callRestEndpoint1",
+      "actions": {
+        "callRestEndpoint1": {
+          "module": "vb/action/builtin/restAction",
+          "parameters": {
+            "requestType": "json"
+          },
+          "outcomes": {
+            "success": "return1"
+          }
+        },
+        "return1": {
+          "module": "vb/action/builtin/returnAction",
+          "parameters": {
+            "outcome": "success",
+            "payload": "{{ $chain.results.callRestEndpoint1 }}"
+          }
+        }
+      },
+      "variables": {
+        "configuration": {
+          "type": {
+            "hookHandler": "vb/RestHookHandler"
+          },
+          "input": "fromCaller",
+          "required": true
+        }
+      }
+    }
+  },
+  "eventListeners": {
+    "SelectionChanged": {
+      "chains": [{
+          "chainId": "navigateToGetIdDetailChain",
+          "parameters": {
+            "getIdId": "[[ $event.detail.value.key || '' ]]"
+          }
+        }
+      ]
+    }
+  },
+  "imports": {
+    "components": {
+      "oj-ext-mobile-page-template": {
+        "path": "vb/components/mobile-page-template/loader"
+      },
+      "oj-list-view": {
+        "path": "ojs/ojlistview"
+      },
+      "oj-avatar": {
+        "path": "ojs/ojavatar"
+      },
+      "oj-vb-list-item": {
+        "path": "vb/components/list-item/loader"
+      }
+    }
+  }
+}
